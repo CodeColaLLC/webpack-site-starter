@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Webpack-site-starter by CodeColaLLC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Webpack-site-starter</h1>
+      <h2 class="project-tagline">A forkable starter project for Webpack-based websites (not apps).</h2>
+      <a href="https://github.com/CodeColaLLC/webpack-site-starter" class="btn">View on GitHub</a>
+      <a href="https://github.com/CodeColaLLC/webpack-site-starter/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/CodeColaLLC/webpack-site-starter/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="webpack-site-starter" class="anchor" href="#webpack-site-starter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Webpack Site Starter</h1>
+
+<p>This is a base repository from CodeCola designed to be forked in order to create a static website compiled from Webpack. It includes a the proper .gitignore file to exclude development and local assets and deploy scripts to automate pushing code to a PHP production environment.</p>
+
+<ul>
+<li><a href="#creating-a-repository">Creating a repository</a></li>
+<li><a href="#installing-locally">Installing locally</a></li>
+<li><a href="#installing-on-the-server">Installing on the server</a></li>
+<li><a href="#setting-up-automatic-deploy">Setting up automatic deploy</a></li>
+<li>
+<a href="#scripts">Scripts</a>
+
+<ul>
+<li><a href="#npm-run-dev"><code>npm run dev</code></a></li>
+<li><a href="#npm-run-build"><code>npm run build</code></a></li>
+<li><a href="#npm-run-deploy"><code>npm run deploy</code></a></li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="creating-a-repository" class="anchor" href="#creating-a-repository" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a repository</h2>
+
+<p>The first step is to "fork" the <em><a href="https://github.com/CodeColaLLC/webpack-site-starter">CodeColaLLC/webpack-site-starter</a></em> repository for the particular client website you are working on. Forking within an organization cannot be done with the GitHub UI but it is easy enough to emulate by hand:</p>
+
+<ol>
+<li><p><a href="https://github.com/organizations/CodeColaLLC/repositories/new">Create a new, empty repository in the <em>CodeColaLLC</em> organization</a>. <g-emoji alias="exclamation" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2757.png">❗</g-emoji> Don't add a readme, .gitignore, or license file. Name it after your client, e.g. <em>acmeco-website</em>.</p></li>
+<li>
+<p>On your local computer, clone the newly created repository, e.g.</p>
+
+<pre><code>git clone https://github.com/CodeColaLLC/acmeco-website.git
+</code></pre>
+</li>
+<li>
+<p>Navigate into the cloned repository's directory, e.g.</p>
+
+<pre><code>cd acmeco-website
+</code></pre>
+</li>
+<li>
+<p>Add the base Webpack site starter repository as an upstream source:</p>
+
+<pre><code>git remote add upstream https://github.com/CodeColaLLC/webpack-site-starter.git
+</code></pre>
+</li>
+<li>
+<p>Finally, merge in the upstream repository's code with</p>
+
+<pre><code>git pull upstream master
+</code></pre>
+</li>
+</ol>
+
+<p>Now the repository is linked to the original starter repository and can be used normally. If changes are made to the starter repository that you want to sync with the client's instance, simply use <code>git pull upstream master</code> to merge in the changes again.</p>
+
+<ol>
+<li>Open <code>./package.json</code> in an editor.</li>
+<li>
+<p>Change the <code>name</code> property to your project name, e.g.</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: acmeco-website<span class="pl-s"><span class="pl-pds">"</span>,</span></pre></div>
+</li>
+<li>
+<p>Change the <code>repository.url</code> property to the URL of your Git repository, e.g.</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>repository<span class="pl-pds">"</span></span>: {
+  <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>git<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>git+https://github.com/CodeColaLLC/acmeco-website.git<span class="pl-pds">"</span></span>
+},</pre></div>
+</li>
+<li>
+<p>Change the <code>author</code> property if applicable, e.g.</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>John Galt &lt;jgalt@twentiethcenturymotors.com&gt; (https://twentiethcenturymotors.com)<span class="pl-pds">"</span></span>,</pre></div>
+</li>
+<li>
+<p>Commit and push your <code>./package.json</code> file to the master branch:</p>
+
+<pre><code>git add ./package.json
+git commit -m 'Changing default package.json to acmeco-website details'
+git push
+</code></pre>
+</li>
+</ol>
+
+<h2>
+<a id="installing-locally" class="anchor" href="#installing-locally" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing locally</h2>
+
+<p>Once you have your repository cloned to your local computer, just run the following command to install the dependencies:</p>
+
+<pre><code>npm install
+</code></pre>
+
+<h2>
+<a id="installing-on-the-server" class="anchor" href="#installing-on-the-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing on the server</h2>
+
+<p>In order to install the website on the client's web server, you will need SSH access to the server. Accessing SSH will vary depending on the hosting provider, and may require enabling in cPanel or an equivalent.</p>
+
+<ol>
+<li>
+<p>Run <a href="#npm-run-deploy">the deploy script</a> to create and push a build.</p>
+
+<pre><code>npm run deploy
+</code></pre>
+</li>
+<li>
+<p>SSH into the hosting web server for the client, e.g.</p>
+
+<pre><code>ssh acmeco@acmeco.com
+</code></pre>
+</li>
+<li><p>Once authenticated, make sure you are in the user's home directory.</p></li>
+<li><p>Run an <code>ls</code> command, looking for the public root (such as <em>public_html</em>, <em>htdocs</em>, or <em>www</em>). Future examples will consider this directory to be called <em>public_html</em>. </p></li>
+<li><p><g-emoji alias="exclamation" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2757.png">❗</g-emoji> If <strong>any</strong> files exist in this public root directory, the next command will fail. Delete or move any existing files before running the next command.</p></li>
+<li>
+<p>Assuming Git is installed on the host, clone the client's website into the public root directory with</p>
+
+<pre><code>git clone https://github.com/CodeColaLLC/acmeco-website.git public_html
+</code></pre>
+</li>
+<li>
+<p>Check out the <code>build</code> branch:</p>
+
+<pre><code>git checkout origin/build
+git pull origin build
+</code></pre>
+</li>
+</ol>
+
+<p>At this point, a running copy of the website will be installed on the server.</p>
+
+<h2>
+<a id="setting-up-automatic-deploy" class="anchor" href="#setting-up-automatic-deploy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setting up automatic deploy</h2>
+
+<p>The last step is to configure the GitHub repository to trigger an automatic deployment whenever someone pushes to a configurable branch.</p>
+
+<p>Whenever a deploy happens, an email is dispatched to the user who made the push, the user/team who owns the repository, and configurable additional email addresses. It will contain a brief message about the successful deployment or a message describing that an error occurred while attempting to <code>git pull</code>.</p>
+
+<ol>
+<li><p>Navigate to the repository in GitHub, e.g. <em>acmeco-website</em>.</p></li>
+<li><p>Click <em>Settings</em>, then <em>Webhooks &amp; services</em>, then <em>Add webhook</em>.</p></li>
+<li><p>In the <em>Payload URL</em> field, enter the path to the hosted website installation, followed by <em>deploy.php</em>, e.g. <code>http://acmeco.com/deploy.php</code>.</p></li>
+<li><p>In the <em>Secret</em> field, choose a long, random, unpredictable token. You can generate one at a website like <a href="http://randomkeygen.com/">this</a> (see the <em>Ft. Knox Passwords</em> section). Keep track of this "secret" for now, but <g-emoji alias="exclamation" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2757.png">❗</g-emoji> don't store it anywhere permanently. (If it is lost, just generate a new one.)</p></li>
+<li><p>Click <em>Add webhook</em>.</p></li>
+<li><p>SSH into the client's web server.</p></li>
+<li>
+<p>Change into the public root directory or path to the website installation, e.g.</p>
+
+<pre><code>cd public_html
+</code></pre>
+</li>
+<li>
+<p>Using your preferred editor, create a file named <code>.deployconfig.json</code>.</p>
+
+<pre><code>vim .deployconfig.json
+</code></pre>
+</li>
+<li>
+<p>Craft a simple JSON object. The only required property is <em>token</em>, which should be set to the secret randomly generated string we attached to the GitHub Webhook earlier.</p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1234567890abcdefg<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>branch<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>build<span class="pl-pds">"</span></span>
+}</pre></div>
+</li>
+<li>
+<p>If you want to configure any email addresses to carbon copy deploy alerts, specify them as a comma-separated list in <em>cc</em>.</p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1234567890abcdefg<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>cc<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>mymailroom@in.mailroom.hipch.at,importantperson@codecola.io<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>branch<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>build<span class="pl-pds">"</span></span>
+}</pre></div>
+</li>
+<li><p>Save the file.</p></li>
+</ol>
+
+<p>Now we should be at a point where the deploy script will be executed every time anyone pushes to the build (or configured) branch. To try it, make a change to a file, then run <a href="#npm-run-deploy"><code>npm run deploy</code></a>. It should automatically be reflected on the web host.</p>
+
+<h2>
+<a id="scripts" class="anchor" href="#scripts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scripts</h2>
+
+<p>This package ships with a few handy scripts to automate development and deployment of the website.</p>
+
+<h3>
+<a id="npm-run-dev" class="anchor" href="#npm-run-dev" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>npm run dev</code>
+</h3>
+
+<p>This command starts a Webpack "hot" server, which watches your source files for changes and automatically recompiles and reloads your browser. Simply run this command, wait for compiling to finish, and visit http://localhost:8080 in your browser.</p>
+
+<h3>
+<a id="npm-run-build" class="anchor" href="#npm-run-build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>npm run build</code>
+</h3>
+
+<p>This command executes a production-like build from your source files using Webpack. It compiles and concatenates your sources into files that are stored in <code>./public/build</code> in your repository. All of your static assets should now be safely contained within the <code>./public</code> directory and you can serve your static website using a standard web server from the <code>./public</code> directory.</p>
+
+<h3>
+<a id="npm-run-deploy" class="anchor" href="#npm-run-deploy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>npm run deploy</code>
+</h3>
+
+<p>Running this script for the first time will create a branch called <code>build</code>, which is necessary in order to complete <a href="#setting-up-automatic-deploy">Setting up automatic deploy</a>.</p>
+
+<p>This command simply runs the top-level bash script file called <code>deploy.sh</code>. The bash script does the following:</p>
+
+<ol>
+<li>Clones your website repository into a directory called <code>./out</code> and checks out a special branch called <code>build</code>. (The branch is created if it does not exist.)</li>
+<li>Deletes all contents of the <code>build</code> directory.</li>
+<li>Runs <a href="#npm-run-build"><code>npm run build</code></a> and copies the results (everything in <code>./public</code>) into the root of the <code>build</code> branch clone.</li>
+<li>Copies <code>./deploy.php</code> into the root of the <code>build</code> branch clone.</li>
+<li>If there are any changes from the previous build, commits and pushes the changes to the <code>build</code> branch clone.</li>
+<li>If a GitHub webhook is configured, the push to the <code>build</code> branch will trigger the live server to pull updates.</li>
+</ol>
+
+<p>The behavior can be changed by editing <code>./deploy.sh</code>. For example, if you have a minimal PHP API in a directory called API that should be copied into the build branch, change the constants near the top of the file like so:</p>
+
+<div class="highlight highlight-source-shell"><pre>SOURCE_DIRS=(<span class="pl-s"><span class="pl-pds">"</span>./public<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>./api<span class="pl-pds">"</span></span>)
+DEST_DIRS=(<span class="pl-s"><span class="pl-pds">"</span>./<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>./api<span class="pl-pds">"</span></span>)</pre></div>
+
+<p>This says to copy the contents of <code>./public</code> to <code>./</code> and the contents of <code>./api</code> and to <code>./api</code>. Note that the file <code>./deploy.php</code> is always automatically copied.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/CodeColaLLC/webpack-site-starter">Webpack-site-starter</a> is maintained by <a href="https://github.com/CodeColaLLC">CodeColaLLC</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
